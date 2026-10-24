@@ -1,0 +1,42 @@
+# Xiaomi Mi TV (MiTV-MOOQ1, device tarzan), Android TV 10, build QTG3.200305.006.6148
+# Apply: tools/disable.sh examples/xiaomi-mitv-mooq1/debloat.txt   Undo: tools/restore.sh <same file>
+#   (restore on this TV: STOCK_LAUNCHER=com.google.android.tvlauncher/.MainActivity tools/restore.sh ...)
+# Everything is DISABLED for user 0, never uninstalled.
+# Comment out any line for an app you use. Answers here: keep Live TV / HDMI only; no Chromecast,
+# no Google Assistant, no Mi screen share, no USB media apps.
+
+# Xiaomi telemetry, ads and promo content
+com.miui.tv.analytics                        # Xiaomi analytics
+com.xiaomi.statistic                         # Xiaomi usage statistics
+com.mitv.tvhome.atv                          # PatchWall content home
+com.mitv.tvhome.michannel                    # PatchWall channel rows
+com.mitv.tvhome.mitvplus                     # Mi TV+ ad-supported channels
+com.xiaomi.android.tvsetup.partnercustomizer # partner app rows / promos for the stock launcher
+android.autoinstalls.config.xiaomi.amelie    # silently installs promoted apps
+com.xm.webcontent                            # web content / promo feeds
+com.xiaomi.amazon.alexa                      # Alexa
+fusion.android.tv.demo                       # store demo mode
+
+# Xiaomi background clutter
+com.mitv.dream                               # Mi screensaver, ~90 MB resident (falls back to basic)
+com.xiaomi.mitv.tvmanager                    # "TV Manager" cleaner
+com.xiaomi.mitv.smartshare                   # Mi screen share (Miracast)
+com.xiaomi.wfdsinkhelperservice              # Miracast sink helper
+com.mitv.gallery                             # USB photo gallery
+com.mitv.videoplayer                         # USB video player
+com.xiaomi.mitv.mediaexplorer                # "Media Player" / scraper
+com.xiaomi.mimusic2                          # Mi music player
+com.duokan.factorytest                       # factory test launcher (also claims HOME)
+
+# Google extras
+com.google.android.tvrecommendations         # home-screen recommendation rows
+com.google.android.leanbacklauncher          # old Android TV launcher (also claims HOME)
+com.google.android.leanbacklauncher.recommendations
+com.google.android.backdrop                  # Google ambient screensaver
+com.google.android.katniss                   # Google Assistant / voice search, ~65 MB resident
+com.google.android.apps.mediashell           # Chromecast built-in
+com.google.android.videos                    # Google Play Movies
+com.google.android.play.games
+com.google.android.youtube.tvmusic           # YouTube Music
+com.google.android.feedback
+com.google.android.tv.bugreportsender

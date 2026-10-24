@@ -10,16 +10,16 @@ SDK="${ANDROID_HOME:-/opt/homebrew/share/android-commandlinetools}"
 BT="$SDK/build-tools/34.0.0"
 JAR="$SDK/platforms/android-34/android.jar"
 # Google TV stock launcher; older Android TV sets use com.google.android.tvlauncher.
-STOCK_LAUNCHER="${STOCK_LAUNCHER:-com.google.android.apps.tv.launcherx}"
+STOCK_LAUNCHER="${STOCK_LAUNCHER:-com.google.android.tvlauncher}"
 B=build
 
 rm -rf "$B" && mkdir -p "$B/gen" "$B/classes" "$B/dex"
 "$BT/aapt2" compile --dir res -o "$B/res.zip"
 "$BT/aapt2" link -o "$B/base.apk" -I "$JAR" --manifest AndroidManifest.xml --java "$B/gen" \
-  -A assets --min-sdk-version 30 --target-sdk-version 30 "$B/res.zip"
+  -A assets --min-sdk-version 29 --target-sdk-version 30 "$B/res.zip"
 javac -nowarn -Xlint:-options --release 11 -classpath "$JAR" -d "$B/classes" \
   $(find src "$B/gen" -name '*.java')
-"$BT/d8" --min-api 30 --lib "$JAR" --output "$B/dex" $(find "$B/classes" -name '*.class')
+"$BT/d8" --min-api 29 --lib "$JAR" --output "$B/dex" $(find "$B/classes" -name '*.class')
 cp "$B/base.apk" "$B/unsigned.apk"
 (cd "$B/dex" && zip -q -u ../unsigned.apk classes.dex)
 "$BT/zipalign" -f 4 "$B/unsigned.apk" "$B/aligned.apk"
@@ -34,7 +34,8 @@ PY=../tools/venv/bin/python
 printf '%s\n' \
   "pm install -r /data/local/tmp/tvhome.apk" \
   "rm -f /data/local/tmp/tvhome.apk" \
-  "pm grant com.mihir.tvhome android.permission.ACCESS_FINE_LOCATION" \
+  "pm grant com.mihir.tvhome android.permission.READ_EXTERNAL_STORAGE" \
+  "mkdir -p /sdcard/Pictures/TVHome" \
   "cmd package set-home-activity --user 0 com.mihir.tvhome/.MainActivity" \
   "pm disable-user --user 0 $STOCK_LAUNCHER" \
   "pm disable-user --user 0 com.google.android.tungsten.setupwraith" \

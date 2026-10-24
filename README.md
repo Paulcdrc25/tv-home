@@ -49,25 +49,38 @@ Undo everything with `tools/restore.sh <the same list>`.
 | Path | What it is |
 |---|---|
 | [PROMPT.md](PROMPT.md) | The prompt for Claude Code / any coding agent |
-| [launcher/](launcher/) | The home screen. 4.7 MB including the wallpapers; plain Android, no network, no background services |
-| [launcher/res/values/config.xml](launcher/res/values/config.xml) | Dock apps, hidden apps, Live TV app, grid columns |
+| [launcher/](launcher/) | The home screen. 4.7 MB including the wallpapers; plain Android, no background services. Network only for the optional Spotify widget |
+| [launcher/res/values/config.xml](launcher/res/values/config.xml) | Default dock apps, hidden apps, banner overrides, Live TV app, grid columns |
 | [tools/tv.py](tools/tv.py) | Pure-Python ADB client: shell, batch, screenshots, chunked APK push |
 | [tools/find-tv.sh](tools/find-tv.sh) | Finds Android TVs on your Wi-Fi |
 | [tools/type.sh](tools/type.sh) | Type into the TV's on-screen keyboard from your laptop (`tools/type.sh` alone prompts hidden, for passwords) |
 | [tools/disable.sh](tools/disable.sh), [tools/restore.sh](tools/restore.sh) | Apply / undo a debloat list |
+| [tools/add-wallpaper.sh](tools/add-wallpaper.sh) | Send your own photos (JPG/PNG/HEIC) to the TV as wallpapers, converted to sRGB |
+| [tools/spotify-connect.py](tools/spotify-connect.py) | One-time Spotify login for the now-playing widget |
+| [restore-my-tv.sh](restore-my-tv.sh) | Undo everything on the Xiaomi MiTV this fork was set up on |
 | [examples/](examples/) | Debloat lists per TV model |
 
 ## The launcher
 
-- Clock, greeting and date top-left. Frosted pills top-right for **Inputs** (HDMI/AV/Live TV
-  dropdown; the remote's Menu key opens it too), **Wi-Fi** (shows the network name) and **Settings**.
-- A dock of your favourite apps. The focused app's name appears above it over a glow coloured from
-  its banner. Press Down for every other app in a grid.
-- 12 nature photos crossfade every 10 minutes, with a scrim so text stays readable. Swap them in
-  `launcher/assets/wallpapers/` (1920×1080 JPEGs, credits in `launcher/WALLPAPER-CREDITS.md`).
+- Minimal, Apple TV-like: a frosted dock of your favourite apps, a small cluster top-right with
+  **Sources** (HDMI/AV/Live TV; the Menu key opens it too), **Fond d'écran**, **Réglages** and the time.
+- Two frosted widgets top-left: a world clock (Tahiti; change `WORLD_TZ` / `WORLD_CITY` in
+  `MainActivity.java`) and a Spotify widget showing the current or last played track as a disc that
+  spins while playing. Select it with the remote and press OK to open Spotify.
+- **Edit the dock from the remote**: long-press OK or press Menu on a tile to move it left/right,
+  remove it, or add an app from the grid (9 max). Saved on the TV; `config.xml` is only the default.
+- **Wallpapers**: 12 nature photos crossfade every 10 minutes. The Fond d'écran picker shows
+  thumbnails, switches instantly and turns rotation on or off. Your own photos go to
+  `/sdcard/Pictures/TVHome` with `tools/add-wallpaper.sh` (credits for the built-in ones in
+  `launcher/WALLPAPER-CREDITS.md`).
+- `banner_from` in `config.xml` gives a tile another app's banner (TizenTube shows YouTube's).
 - Deterministic D-pad focus, remembers the last tile, picks up newly installed apps on return.
 
-Change the dock: edit `config.xml`, then run `launcher/build-and-install.sh`.
+Spotify widget: create an app at https://developer.spotify.com/dashboard (redirect URI
+`http://127.0.0.1:8888/callback`, Web API), then `python3 tools/spotify-connect.py <id> <secret>`.
+
+The build script defaults to the Android TV launcher (`com.google.android.tvlauncher`). On Google TV
+run it as `STOCK_LAUNCHER=com.google.android.apps.tv.launcherx launcher/build-and-install.sh`.
 
 ## Gotchas we hit
 
@@ -85,12 +98,16 @@ Change the dock: edit `config.xml`, then run `launcher/build-and-install.sh`.
   while another app was in front. The launcher re-checks with `getChangedPackages` on every return.
 - **Unsplash blocks scripted downloads** with a bot check. The wallpapers come from Wikimedia
   Commons Featured Pictures instead.
+- **Network calls failed with `EPERM`** after adding the INTERNET permission in an update (Android 10).
+  The permission shows as granted, but netd only picks it up after a reboot of the TV.
+- **Wallpapers looked washed out and banded**: decoding as `RGB_565` and a heavy scrim. They're now
+  decoded in full colour (sRGB) into a 32-bit window with a light, dithered scrim.
 
 ## Supported TVs
 
 Android TV and Google TV: TCL, Xiaomi/Redmi, Hisense, Sony, OnePlus, Realme, Nvidia Shield,
 Chromecast with Google TV and most others. Not Samsung (Tizen), LG (webOS) or Fire TV.
-Tested on: TCL Google TV (Android 11). Add yours to `examples/`.
+Tested on: TCL Google TV (Android 11), Xiaomi Mi TV MiTV-MOOQ1 (Android TV 10). Add yours to `examples/`.
 
 ## Credits
 
