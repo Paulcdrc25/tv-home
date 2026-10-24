@@ -20,6 +20,8 @@ printf '%s\n' \
   "settings put global picture_color_temperature 3" \
   "settings put global tv_picture_advance_video_dnr 2" \
   "settings put global tv_picture_advance_video_mjc_effect 2" \
+  "settings delete secure enabled_accessibility_services" \
+  "settings put secure accessibility_enabled 0" \
   "pm uninstall com.mihir.tvhome" \
   "input keyevent KEYCODE_HOME" \
   | tools/venv/bin/python -I tools/tv.py --batch

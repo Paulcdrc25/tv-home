@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="key_service_label">Centre de contrôle TV</string>
+    <string name="key_service_description">Maintenir Home ouvre les apps ouvertes, pour les fermer et libérer de la mémoire.</string>
+</resources>

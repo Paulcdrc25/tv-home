@@ -5,4 +5,8 @@
         <item name="android:colorBackground">@android:color/black</item>
         <item name="android:windowAnimationStyle">@android:style/Animation.Activity</item>
     </style>
+    <style name="Switcher" parent="@android:style/Theme.DeviceDefault.NoActionBar.Fullscreen">
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+    </style>
 </resources>

@@ -73,6 +73,10 @@ Undo everything with `tools/restore.sh <the same list>`.
   thumbnails, switches instantly and turns rotation on or off. Your own photos go to
   `/sdcard/Pictures/TVHome` with `tools/add-wallpaper.sh` (credits for the built-in ones in
   `launcher/WALLPAPER-CREDITS.md`).
+- **App switcher (hold Home anywhere)**: iOS-style cards of the apps used since boot over a blurred
+  wallpaper. Up closes an app and frees its memory, OK reopens it, Down reaches "Tout fermer"; a
+  gauge shows free RAM. Uses an accessibility service that only filters the Home key (enabled by
+  the install script). Apps playing in the background (music) can't be force-closed.
 - `banner_from` in `config.xml` gives a tile another app's banner (TizenTube shows YouTube's).
 - Deterministic D-pad focus, remembers the last tile, picks up newly installed apps on return.
 

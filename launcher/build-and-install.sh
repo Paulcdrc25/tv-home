@@ -36,6 +36,9 @@ printf '%s\n' \
   "rm -f /data/local/tmp/tvhome.apk" \
   "pm grant com.mihir.tvhome android.permission.READ_EXTERNAL_STORAGE" \
   "mkdir -p /sdcard/Pictures/TVHome" \
+  "appops set com.mihir.tvhome GET_USAGE_STATS allow" \
+  "settings put secure enabled_accessibility_services com.mihir.tvhome/com.mihir.tvhome.KeyService" \
+  "settings put secure accessibility_enabled 1" \
   "cmd package set-home-activity --user 0 com.mihir.tvhome/.MainActivity" \
   "pm disable-user --user 0 $STOCK_LAUNCHER" \
   "pm disable-user --user 0 com.google.android.tungsten.setupwraith" \
