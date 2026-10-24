@@ -2,7 +2,7 @@
 # Apply: tools/disable.sh examples/xiaomi-mitv-mooq1/debloat.txt   Undo: tools/restore.sh <same file>
 #   (restore on this TV: STOCK_LAUNCHER=com.google.android.tvlauncher/.MainActivity tools/restore.sh ...)
 # Everything is DISABLED for user 0, never uninstalled.
-# Comment out any line for an app you use. Answers here: keep Live TV / HDMI only; no Chromecast,
+# Comment out any line for an app you use. Answers here: keep Live TV / HDMI and Chromecast;
 # no Google Assistant, no Mi screen share, no USB media apps.
 
 # Xiaomi telemetry, ads and promo content
@@ -34,7 +34,7 @@ com.google.android.leanbacklauncher          # old Android TV launcher (also cla
 com.google.android.leanbacklauncher.recommendations
 com.google.android.backdrop                  # Google ambient screensaver
 com.google.android.katniss                   # Google Assistant / voice search, ~65 MB resident
-com.google.android.apps.mediashell           # Chromecast built-in
+# com.google.android.apps.mediashell         # Chromecast built-in: kept, used for screen casting from the Mac
 com.google.android.videos                    # Google Play Movies
 com.google.android.play.games
 com.google.android.youtube.tvmusic           # YouTube Music
